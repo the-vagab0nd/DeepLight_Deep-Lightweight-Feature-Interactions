@@ -4,7 +4,7 @@ import random
 import argparse
 
 import numpy as np
-
+import pandas as pd
 from model import DeepFMs
 from utils import data_preprocess
 
@@ -69,3 +69,7 @@ model = DeepFMs.DeepFMs(field_size=39,feature_sizes=result_dict['feature_sizes']
 #     model = model.cuda()
 model.fit(result_dict['index'], result_dict['value'], result_dict['label'], test_dict['index'], test_dict['value'], test_dict['label'], \
         prune=pars.prune, prune_fm=pars.prune_fm, prune_r=pars.prune_r, prune_deep=pars.prune_deep, save_path=save_model_name, emb_r=pars.emb_r, emb_corr=pars.emb_corr)
+res_arr = model.predict_proba(test_dict['index'], test_dict['value'])
+samp = pd.read_csv('/content/DeepLight_Deep-Lightweight-Feature-Interactions/data/tiny_train_input.csv')
+samp['predicted_ctr'] = res_arr
+samp.to_csv('result.csv')
