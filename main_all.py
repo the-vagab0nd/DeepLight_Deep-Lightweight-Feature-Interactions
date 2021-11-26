@@ -59,13 +59,13 @@ test_dict = data_preprocess.read_data('./data/tiny_test_input.csv', './data/cate
 #result_dict = data_preprocess.read_data('./data/large/train.csv', './data/large/criteo_feature_map', criteo_num_feat_dim, feature_dim_start=1, dim=39)
 #test_dict = data_preprocess.read_data('./data/large/valid.csv', './data/large/criteo_feature_map', criteo_num_feat_dim, feature_dim_start=1, dim=39)
 
-with torch.cuda.device(pars.gpu):
-    model = DeepFMs.DeepFMs(field_size=39,feature_sizes=result_dict['feature_sizes'], embedding_size=pars.embedding_size, n_epochs=pars.n_epochs, \
-            verbose=True, use_cuda=pars.use_cuda, use_fm=pars.use_fm, use_fwfm=pars.use_fwfm, use_ffm=pars.use_ffm, use_deep=pars.use_deep, \
-            batch_size=pars.batch_size, learning_rate=pars.learning_rate, weight_decay=pars.l2, momentum=pars.momentum, sparse=pars.sparse, warm=pars.warm, \
-            h_depth=pars.h_depth, deep_nodes=pars.deep_nodes, num_deeps=pars.num_deeps, numerical=pars.numerical, use_lw=pars.use_lw, use_fwlw=pars.use_fwlw, \
-            use_logit=pars.use_logit, random_seed=pars.random_seed)
-    if pars.use_cuda:
-        model = model.cuda()
-        model.fit(result_dict['index'], result_dict['value'], result_dict['label'], test_dict['index'], test_dict['value'], test_dict['label'], \
-                prune=pars.prune, prune_fm=pars.prune_fm, prune_r=pars.prune_r, prune_deep=pars.prune_deep, save_path=save_model_name, emb_r=pars.emb_r, emb_corr=pars.emb_corr)
+# with torch.cuda.device(pars.gpu):
+model = DeepFMs.DeepFMs(field_size=39,feature_sizes=result_dict['feature_sizes'], embedding_size=pars.embedding_size, n_epochs=pars.n_epochs, \
+        verbose=True, use_cuda=0, use_fm=pars.use_fm, use_fwfm=pars.use_fwfm, use_ffm=pars.use_ffm, use_deep=pars.use_deep, \
+        batch_size=pars.batch_size, learning_rate=pars.learning_rate, weight_decay=pars.l2, momentum=pars.momentum, sparse=pars.sparse, warm=pars.warm, \
+        h_depth=pars.h_depth, deep_nodes=pars.deep_nodes, num_deeps=pars.num_deeps, numerical=pars.numerical, use_lw=pars.use_lw, use_fwlw=pars.use_fwlw, \
+        use_logit=pars.use_logit, random_seed=pars.random_seed)
+# if pars.use_cuda:
+#     model = model.cuda()
+model.fit(result_dict['index'], result_dict['value'], result_dict['label'], test_dict['index'], test_dict['value'], test_dict['label'], \
+        prune=pars.prune, prune_fm=pars.prune_fm, prune_r=pars.prune_r, prune_deep=pars.prune_deep, save_path=save_model_name, emb_r=pars.emb_r, emb_corr=pars.emb_corr)
