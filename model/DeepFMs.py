@@ -453,6 +453,7 @@ class DeepFMs(torch.nn.Module):
         print("Number of total parameters: %d"% (num_total))
         n_iter = 0
         for epoch in range(self.n_epochs):
+            time.sleep(3)
             total_loss = 0.0
             batch_iter = x_size // self.batch_size
             epoch_begin_time = time()
