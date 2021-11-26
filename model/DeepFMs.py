@@ -1,20 +1,3 @@
-# -*- coding:utf-8 -*-
-
-
-"""
-Created on Dec 10, 2017
-@author: jachin,Nie
-
-Edited by Wei Deng on Jun.7, 2019
-
-A pytorch implementation of deepfms including: FM, FFM, FwFM, DeepFM, DeepFFM, DeepFwFM
-
-Reference:
-[1] DeepFwFM: A Factorization-Machine based Neural Network for CTR Prediction,
-    Huifeng Guo, Ruiming Tang, Yunming Yey, Zhenguo Li, Xiuqiang He.
-
-"""
-
 import os,sys,random
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -572,7 +555,7 @@ class DeepFMs(torch.nn.Module):
                 non_zero_r = (symm_sum != 0).sum().item()
         print('Number of pruned 1st order embeddings: %d' % (num_1st_order_embeddings))
         print('Number of pruned 2nd order embeddings: %d' % (num_2nd_order_embeddings))
-        print('Number of pruned 2nd order interactions: %d' % (non_zero_r))
+#         print('Number of pruned 2nd order interactions: %d' % (non_zero_r))
         print('Number of pruned DNN parameters: %d' % (num_dnn))
         print("Number of pruned total parameters: %d"% (num_total))
         '''
@@ -705,7 +688,7 @@ class DeepFMs(torch.nn.Module):
         return (pred.data.numpy() > 0.5)
 
     def predict_proba(self, Xi, Xv):
-        Xi = np.array(Xi).reshape((-1, self.field_size, 1))
+        Xi = np.array(Xi).reshape((-1, self.field_size -self.num, 1))
         Xi = Variable(torch.LongTensor(Xi))
         Xv = Variable(torch.FloatTensor(Xv))
         if self.use_cuda and torch.cuda.is_available():
