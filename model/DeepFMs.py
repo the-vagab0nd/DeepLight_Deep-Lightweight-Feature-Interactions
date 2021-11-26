@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.metrics import roc_auc_score
 from time import time
-
+import time as t
 import torch
 import torch.autograd as autograd
 import torch.nn as nn
@@ -453,7 +453,7 @@ class DeepFMs(torch.nn.Module):
         print("Number of total parameters: %d"% (num_total))
         n_iter = 0
         for epoch in range(self.n_epochs):
-            time.sleep(3)
+            t.sleep(3)
             total_loss = 0.0
             batch_iter = x_size // self.batch_size
             epoch_begin_time = time()
